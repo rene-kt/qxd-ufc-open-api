@@ -31,3 +31,10 @@ def insert(obj: dict, key: str):
     r.sadd(key, value)
     r.set(f'{key}:{obj["id"]}', value)
     
+def activate_api_key(api_key: str):
+    api_user = get_by_id(API_KEY, api_key)
+    if(api_user == None): return
+    api_user = json.loads(api_user)
+    api_user["active"] = True
+    insert(api_user, API_KEY)
+    
