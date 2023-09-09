@@ -1,6 +1,4 @@
-from enum import Enum
-
-class Keys(Enum):
-    DISCIPLINE = "discipline"
-    TEACHER = "teacher" 
-    SUBJECT = "subject"
+DISCIPLINE = "discipline"
+TEACHER = "teacher" 
+SUBJECT = "subject"
+API_KEY = "api_key"

@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import json
 from database import redis
 from model.discipline import Discipline
-from model.keys import Keys as DbKeys
+from model.keys import DISCIPLINE
 
 def execute(flag = False): 
     if(flag == False): return
@@ -36,6 +36,6 @@ def execute(flag = False):
                 elements[2].text.replace("h", ""),
                 pre_requisite
             )
-            redis.insert(discipline.to_dict(), DbKeys.DISCIPLINE.value)
+            redis.insert(discipline.to_dict(), DISCIPLINE)
         total += 1
     driver.close()

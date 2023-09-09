@@ -1,7 +1,8 @@
 import redis
 import json
 import uuid
-from model.keys import Keys
+from model.api_user import ApiUser
+from model.keys import *
 from model.subject import Subject
 from model.teacher import Teacher
 
@@ -11,13 +12,13 @@ def delete():
     r.flushall()
 
 def insert_teacher(teacher: Teacher):
-    insert(teacher.to_dict(), Keys.TEACHER.value)
+    insert(teacher.to_dict(), TEACHER)
     
     for discipline in teacher.disciplines:
         if(get_by_id("discipline", discipline) != None):
             subject = Subject(str(uuid.uuid4()), teacher.id, discipline)
-            insert(subject.to_dict(), Keys.SUBJECT.value)
-        
+            insert(subject.to_dict(), SUBJECT)
+            
 def get_all(key: str):
     return r.smembers(key)
 
