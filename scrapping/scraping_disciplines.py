@@ -22,8 +22,9 @@ def execute(flag = False):
             except Exception:
                 pass
         return None
-
+    total = 1
     for row in rows:
+        print(f'Processing discipline {total} of {len(rows)}')
         id = row.get_attribute("id")
         if id.startswith("QX") or id.startswith("PRG"):
             elements = row.find_elements(By.TAG_NAME, "td")
@@ -35,5 +36,6 @@ def execute(flag = False):
                 elements[2].text.replace("h", ""),
                 pre_requisite
             )
-            db.insert_discipline(discipline)
+            db.insert(discipline.to_dict(), "discipline")
+        total += 1
     driver.close()

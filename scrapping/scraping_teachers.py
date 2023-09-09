@@ -22,8 +22,9 @@ def execute(flag = False):
     driver.get("https://www.quixada.ufc.br/docente/")
     conteudo = driver.find_element(By.ID, "conteudo")
     rows = conteudo.find_elements(By.CLASS_NAME, "row")
-
+    total = 1
     for row in rows:
+        print(f'Processing {total} of {len(rows)}')
         div = row.find_element(By.CLASS_NAME, "col-md-10")
         name = div.find_element(By.TAG_NAME, "h2")  
         teacher = {
@@ -67,6 +68,8 @@ def execute(flag = False):
             saved = Teacher(str(uuid.uuid4()), teacher["name"], teacher["disciplines"])
             db.insert_teacher(saved)
             print(f"Erro ao processar {teacher['name']}: {str(e)}")
+        finally: 
+            total += 1
     driver.quit()
 
                 
