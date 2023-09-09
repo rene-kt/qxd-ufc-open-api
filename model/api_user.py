@@ -4,3 +4,11 @@ class ApiUser:
         self.name = name
         self.email = email
         self.is_active = is_active
+        
+    def to_dict(self):
+        return {
+            "id": self.api_key,
+            "name": self.name,
+            "email": self.email,
+            "active": self.is_active
+        }

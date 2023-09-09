@@ -3,6 +3,8 @@ from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 from dotenv import load_dotenv
 import os
 load_dotenv()
+HOSTNAME = os.getenv("API_HOST")
+PORT = os.getenv("API_PORT")
 
 conf = ConnectionConfig(
     MAIL_USERNAME=str(os.getenv("ROOT_EMAIL_USER")),
@@ -15,13 +17,14 @@ conf = ConnectionConfig(
     MAIL_STARTTLS=True
 )
 
-async def send(email: str):
+async def send(email: str, api_key: str):
     try:
         fm = FastMail(conf)
         message = MessageSchema(
-            subject="Assunto do Email",
+            subject="Ativação de API KEY",
             recipients=[email],
-            body="Corpo do Email",
+            # TODO: Ajustar url de acordo com ambiente
+            body=f"Clique no link para ativar sua API KEY: http://{HOSTNAME}:{PORT}/key/{api_key}",
             subtype="html"
         )
         await fm.send_message(message)
