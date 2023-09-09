@@ -9,8 +9,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import re
 import uuid
-from database.teacher import Teacher
-from database import db
+from database import redis
+from model.teacher import Teacher
 
 def execute(flag = False):
     if(flag == False): return
@@ -59,14 +59,14 @@ def execute(flag = False):
 
             teacher["disciplines"] = list(codes)  # Converta o conjunto para uma lista
             saved = Teacher(str(uuid.uuid4()), teacher["name"], teacher["disciplines"])
-            db.insert_teacher(saved)
+            redis.insert_teacher(saved)
 
             # Volte para a página inicial
             driver.close()
             driver.switch_to.window(driver.window_handles[0])
         except Exception as e:
             saved = Teacher(str(uuid.uuid4()), teacher["name"], teacher["disciplines"])
-            db.insert_teacher(saved)
+            redis.insert_teacher(saved)
             print(f"Erro ao processar {teacher['name']}: {str(e)}")
         finally: 
             total += 1

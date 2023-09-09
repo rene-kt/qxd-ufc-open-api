@@ -1,11 +1,9 @@
 import redis
-
-from database.keys import Keys
-from .discipline import Discipline
-from .teacher import Teacher
-from .subject import Subject
 import json
 import uuid
+from model.keys import Keys
+from model.subject import Subject
+from model.teacher import Teacher
 
 r = redis.Redis(host='localhost', port=6379)
 

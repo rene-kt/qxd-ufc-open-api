@@ -4,10 +4,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import json
-from database.keys import Keys as DbKeys
-
-from database.discipline import Discipline
-from database import db
+from database import redis
+from model.discipline import Discipline
+from model.keys import Keys as DbKeys
 
 def execute(flag = False): 
     if(flag == False): return
@@ -37,6 +36,6 @@ def execute(flag = False):
                 elements[2].text.replace("h", ""),
                 pre_requisite
             )
-            db.insert(discipline.to_dict(), DbKeys.DISCIPLINE.value)
+            redis.insert(discipline.to_dict(), DbKeys.DISCIPLINE.value)
         total += 1
     driver.close()
