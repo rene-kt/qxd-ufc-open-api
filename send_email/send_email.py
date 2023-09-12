@@ -5,6 +5,7 @@ import os
 load_dotenv()
 HOSTNAME = os.getenv("API_HOST")
 PORT = os.getenv("API_PORT")
+PROFILE = os.getenv("PROFILE")
 
 conf = ConnectionConfig(
     MAIL_USERNAME=str(os.getenv("ROOT_EMAIL_USER")),
@@ -18,6 +19,7 @@ conf = ConnectionConfig(
 )
 
 async def send(email: str, api_key: str):
+    if PROFILE == 'LOCAL': return {"message": "Email enviado com sucesso!"}
     try:
         fm = FastMail(conf)
         message = MessageSchema(
