@@ -24,9 +24,9 @@ def execute(flag = False):
         return None
     total = 1
     for row in rows:
-        print(f'Processing discipline {total} of {len(rows)}')
         id = row.get_attribute("id")
         if id.startswith("QX") or id.startswith("PRG"):
+            print(f'Processing discipline {total} of {len(rows)}')
             elements = row.find_elements(By.TAG_NAME, "td")
             pre_requisite = extract_pre_requisite(elements[4])
 
@@ -37,5 +37,6 @@ def execute(flag = False):
                 pre_requisite
             )
             redis.insert(discipline.to_dict(), DISCIPLINE)
-        total += 1
+            total += 1
+
     driver.close()

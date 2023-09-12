@@ -10,7 +10,17 @@ from selenium.webdriver.common.by import By
 import re
 import uuid
 from database import redis
+from model.keys import TEACHER
 from model.teacher import Teacher
+
+def build_id(name: str):
+    words = name.split(" ")
+    initials = []
+    for word in words:
+        if word in list("de", "da", "do", "dos", "das", "e", "a"): continue
+        initials.append(word[0])
+        initials.append(word[1])
+    return "".join(initials).upper()
 
 def execute(flag = False):
     if(flag == False): return
@@ -57,20 +67,18 @@ def execute(flag = False):
                     id = resultados[0]
                     codes.add(id)
 
-            teacher["disciplines"] = list(codes)  # Converta o conjunto para uma lista
-            saved = Teacher(str(uuid.uuid4()), teacher["name"], teacher["disciplines"])
+            teacher["disciplines"] = list(codes)
+            saved = Teacher(build_id(teacher["name"]), teacher["name"], teacher["disciplines"])
             redis.insert_teacher(saved)
 
             # Volte para a página inicial
             driver.close()
             driver.switch_to.window(driver.window_handles[0])
         except Exception as e:
-            saved = Teacher(str(uuid.uuid4()), teacher["name"], teacher["disciplines"])
+            saved = Teacher(build_id(teacher["name"]), teacher["name"], teacher["disciplines"])
             redis.insert_teacher(saved)
             print(f"Erro ao processar {teacher['name']}: {str(e)}")
         finally: 
             total += 1
     driver.quit()
-
-                
-
+    

@@ -12,11 +12,16 @@ def delete():
     r.flushall()
 
 def insert_teacher(teacher: Teacher):
+    saved = get_by_id(TEACHER, teacher.id)
+    if saved:
+        value = json.loads(saved)
+        teacher.disciplines = set(value["disciplines"] + teacher.disciplines)
+        
     insert(teacher.to_dict(), TEACHER)
     
     for discipline in teacher.disciplines:
-        if(get_by_id("discipline", discipline) != None):
-            subject = Subject(str(uuid.uuid4()), teacher.id, discipline)
+        if(get_by_id(DISCIPLINE, discipline) != None):
+            subject = Subject(f'{discipline}-{teacher.id}', teacher.id, discipline)
             insert(subject.to_dict(), SUBJECT)
             
 def get_all(key: str):
