@@ -1,7 +1,7 @@
 import redis
 import json
-import uuid
 from model.api_user import ApiUser
+from model.discipline import Discipline
 from model.keys import *
 from model.subject import Subject
 from model.teacher import Teacher
@@ -23,7 +23,16 @@ def insert_teacher(teacher: Teacher):
         if(get_by_id(DISCIPLINE, discipline) != None):
             subject = Subject(f'{discipline}-{teacher.id}', teacher.id, discipline)
             insert(subject.to_dict(), SUBJECT)
-            
+
+def insert_discipline(discipline: Discipline):
+    saved = get_by_id(DISCIPLINE, discipline.id)
+    if saved:
+        print(f"Discipline {discipline.id} already exists in the given courses {discipline.courses}")
+        value = json.loads(saved)
+        discipline.courses = set(value["courses"] + discipline.courses)
+    
+    insert(discipline.to_dict(), DISCIPLINE)
+    
 def get_all(key: str):
     return r.smembers(key)
 

@@ -7,6 +7,15 @@ import json
 from database import redis
 from model.discipline import Discipline
 from model.keys import DISCIPLINE
+from model.courses_enum import Courses
+
+def extract_pre_requisite(element):
+    if element.text != "–":
+        try:
+            return element.find_element(By.TAG_NAME, "a").text
+        except Exception:
+            pass
+    return None
 
 def execute(flag = False): 
     if(flag == False): return
@@ -15,18 +24,10 @@ def execute(flag = False):
     driver = webdriver.Firefox(options=opts)
     driver.get("https://cc.quixada.ufc.br/estrutura-curricular/estrutura-curricular/")
     rows = driver.find_elements(By.TAG_NAME, "tr")
-    def extract_pre_requisite(element):
-        if element.text != "–":
-            try:
-                return element.find_element(By.TAG_NAME, "a").text
-            except Exception:
-                pass
-        return None
     total = 1
-    for row in rows:
-        id = row.get_attribute("id")
-        if id.startswith("QX") or id.startswith("PRG"):
-            print(f'Processing discipline {total} of {len(rows)}')
+    filtered_rows = list(filter(lambda row: row.get_attribute("id").startswith(("QX", "PRG")), rows))
+    for row in filtered_rows:
+            print(f'Processing discipline {total} of {len(filtered_rows)}')
             elements = row.find_elements(By.TAG_NAME, "td")
             pre_requisite = extract_pre_requisite(elements[4])
 
@@ -34,7 +35,8 @@ def execute(flag = False):
                 elements[0].text,
                 elements[1].text,
                 elements[2].text.replace("h", ""),
-                pre_requisite
+                pre_requisite,
+                Courses.CC.name
             )
             redis.insert(discipline.to_dict(), DISCIPLINE)
             total += 1

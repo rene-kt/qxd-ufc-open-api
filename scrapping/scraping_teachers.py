@@ -17,7 +17,7 @@ def build_id(name: str):
     words = name.split(" ")
     initials = []
     for word in words:
-        if word in list("de", "da", "do", "dos", "das", "e", "a"): continue
+        if word in ["de", "da", "do", "dos", "das", "e", "a"]: continue
         initials.append(word[0])
         initials.append(word[1])
     return "".join(initials).upper()
