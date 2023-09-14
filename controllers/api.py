@@ -75,6 +75,10 @@ async def activate_api_key(api_key: str):
     return "Chave ativada com sucesso!"
 
 
+@app.get("/courses/{id}")
+async def get_courses_disciplines(id):
+    return handle_json_list(redis.get_all(COURSE, id))
+
 def handle_json_list(list):
     result = []
     for item in list:

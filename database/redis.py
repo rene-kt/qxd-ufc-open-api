@@ -31,9 +31,17 @@ def insert_discipline(discipline: Discipline):
         value = json.loads(saved)
         discipline.courses = set(value["courses"] + discipline.courses)
     
+    for course in discipline.courses: insert_update_course(course, discipline)
     insert(discipline.to_dict(), DISCIPLINE)
+
     
-def get_all(key: str):
+def insert_update_course(course: str, discipline: Discipline):
+    key = f'{COURSE}:{course}'
+    print(f"Inserting discipline {discipline.id} in course {course}")
+    r.sadd(key, json.dumps(discipline.to_dict()))
+    
+def get_all(key: str, id: str = None):
+    if id: return r.smembers(f'{key}:{id}')
     return r.smembers(key)
 
 def get_by_id(key: str, id: str):

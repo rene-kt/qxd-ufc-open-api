@@ -1,5 +1,5 @@
 class Discipline:
-    def __init__(self, id: str, name: str, hours: int, pre_requisite: str, courses: set):
+    def __init__(self, id: str, name: str, hours: int, pre_requisite: str, courses: list):
         self.id = id
         self.name = name
         self.hours = hours

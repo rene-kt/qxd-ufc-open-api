@@ -36,9 +36,9 @@ def execute(flag = False):
                 elements[1].text,
                 elements[2].text.replace("h", ""),
                 pre_requisite,
-                Courses.CC.name
+                [Courses.CC.name]
             )
-            redis.insert(discipline.to_dict(), DISCIPLINE)
+            redis.insert_discipline(discipline)
             total += 1
 
     driver.close()
