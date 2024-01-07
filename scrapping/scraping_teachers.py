@@ -12,6 +12,7 @@ import uuid
 from database import redis
 from model.keys import TEACHER
 from model.teacher import Teacher
+from scrapping.try_connection import try_connection
 
 def build_id(name: str):
     words = name.split(" ")
@@ -24,9 +25,9 @@ def build_id(name: str):
 
 def execute(flag = False):
     if(flag == False): return
-    opts = webdriver.FirefoxOptions()
-    opts.headless = True
-    driver = webdriver.Firefox(options=opts)
+    
+    driver = try_connection()
+    print("Connection successfull established")
     regex = r'QXD\d+'
 
     driver.get("https://www.quixada.ufc.br/docente/")
@@ -80,5 +81,4 @@ def execute(flag = False):
             print(f"Erro ao processar {teacher['name']}: {str(e)}")
         finally: 
             total += 1
-    driver.quit()
     

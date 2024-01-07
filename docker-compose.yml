@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  selenium:
+    image: selenium/standalone-chrome:latest
+    container_name: selenium-container
+    ports:
+      - "4444:4444"
+    shm_size: '256m' 
+
+  redis:
+    image: redis
+
+  python:
+    build:
+      context: .
+      dockerfile: python.Dockerfile
+    container_name: my-python
+    ports:
+      - "8888:8888"
+    volumes:
+     - .:/db
+    depends_on:
+      - redis
+      - selenium

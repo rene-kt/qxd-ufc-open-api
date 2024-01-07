@@ -12,10 +12,13 @@ PROFILE = os.getenv("APP_PROFILE")
 
 
 if __name__ == "__main__":
+    print(f'Starting application on host: {HOSTNAME}, with port {PORT} on profile {PROFILE}')        
+
     if redis.get_all(DISCIPLINE) == set():
         scraping_disciplines.execute(True)
     if redis.get_all(TEACHER) == set():
         scraping_teachers.execute(True)
+        
     print(f'Starting application on host: {HOSTNAME}, with port {PORT} on profile {PROFILE}')        
     uvicorn.run("controllers.api:app", host="0.0.0.0", port=int(PORT))
 
