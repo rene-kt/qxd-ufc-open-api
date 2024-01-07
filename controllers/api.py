@@ -1,6 +1,5 @@
 from fastapi import FastAPI, HTTPException, Request
 from database import redis
-from database import sql
 import json
 from model.api_user import ApiUser
 from model.create_api_key import CreateApiKey

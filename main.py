@@ -1,4 +1,4 @@
-from database import redis, sql
+from database import redis
 from model.keys import DISCIPLINE, TEACHER
 from scrapping import scraping_teachers, scraping_disciplines
 import uvicorn
@@ -12,12 +12,10 @@ PROFILE = os.getenv("APP_PROFILE")
 
 
 if __name__ == "__main__":
-    redis.delete()
     if redis.get_all(DISCIPLINE) == set():
         scraping_disciplines.execute(True)
-    # if redis.get_all(TEACHER) == set():
-        # scraping_teachers.execute(True)
+    if redis.get_all(TEACHER) == set():
+        scraping_teachers.execute(True)
     print(f'Starting application on host: {HOSTNAME}, with port {PORT} on profile {PROFILE}')        
-    sql.init()
     uvicorn.run("controllers.api:app", host="0.0.0.0", port=int(PORT))
 

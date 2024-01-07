@@ -20,7 +20,7 @@ def extract_pre_requisite(element):
 def execute(flag = False): 
     if(flag == False): return
     opts = webdriver.FirefoxOptions()
-    opts.headless = True
+    opts.headless = False
     driver = webdriver.Firefox(options=opts)
     driver.get("https://cc.quixada.ufc.br/estrutura-curricular/estrutura-curricular/")
     rows = driver.find_elements(By.TAG_NAME, "tr")
