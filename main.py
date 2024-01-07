@@ -2,14 +2,8 @@ from database import redis
 from model.keys import DISCIPLINE, TEACHER
 from scrapping import scraping_teachers, scraping_disciplines
 import uvicorn
-from dotenv import load_dotenv
-import os
-load_dotenv()
 
-HOSTNAME = os.getenv("API_HOST")
-PORT = os.getenv("API_PORT")
-PROFILE = os.getenv("APP_PROFILE")
-
+from config import HOSTNAME, PORT, PROFILE
 
 if __name__ == "__main__":
     print(f'Starting application on host: {HOSTNAME}, with port {PORT} on profile {PROFILE}')        

@@ -1,6 +1,8 @@
 from selenium import webdriver
-    
-def try_connection(isLocal = False):
+
+from config import PROFILE
+
+def try_connection():
     print("Trying to connect to selenium server...") 
     result = None
     while result is None:
@@ -9,9 +11,10 @@ def try_connection(isLocal = False):
             opts.add_argument('--no-sandbox')
             opts.add_argument('--headless')
 
-            if isLocal: driver = webdriver.Chrome(options=opts)
+            if PROFILE == 'LOCAL': driver = webdriver.Chrome(options=opts)
             else: driver = webdriver.Remote(command_executor="http://selenium:4444", options=opts)
+            
             return driver
         except:
-            print("It was not possiblee to connect") 
+            print("It was not possible to connect") 
             pass

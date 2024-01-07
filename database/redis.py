@@ -1,4 +1,3 @@
-from dotenv import load_dotenv
 import redis
 import json
 from model.api_user import ApiUser
@@ -7,12 +6,9 @@ from model.keys import *
 from model.subject import Subject
 from model.teacher import Teacher
 
-import os
-load_dotenv()
+from config import REDIS_HOST
 
-PORT = os.getenv("REDIS_PORT")
-
-r = redis.Redis(host='redis', port=6379)
+r = redis.Redis(host=str(REDIS_HOST), port=6379)
 
 def delete(): 
     r.flushall()

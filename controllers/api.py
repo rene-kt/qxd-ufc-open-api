@@ -8,10 +8,8 @@ import time
 import uuid
 from datetime import datetime
 from send_email import send_email
-from dotenv import load_dotenv
-import os
-load_dotenv()
-PROFILE = os.getenv("APP_PROFILE")
+
+from config import PROFILE
 
 app = FastAPI()
 
@@ -21,7 +19,7 @@ async def middleware(request: Request, call_next):
     now = datetime.now()
     url = request.url.path
 
-    if PROFILE != 'LOCAL':
+    if PROFILE not in ['LOCAL', 'TEST']:
         key = redis.get_by_id(API_KEY, request.headers.get("api_key"))
         if key == None or key.is_active == False:
             raise HTTPException(status_code=401, detail="API KEY inválida")

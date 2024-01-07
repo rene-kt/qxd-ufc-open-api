@@ -23,3 +23,6 @@ services:
     depends_on:
       - redis
       - selenium
+    environment: 
+      - REDIS_HOST=redis
+      - APP_PROFILE=TEST

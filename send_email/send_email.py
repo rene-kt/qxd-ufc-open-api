@@ -1,16 +1,13 @@
 from fastapi import HTTPException
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 from dotenv import load_dotenv
-import os
-load_dotenv()
-HOSTNAME = os.getenv("API_HOST")
-PORT = os.getenv("API_PORT")
-PROFILE = os.getenv("PROFILE")
+
+from config import MAIL_USER, MAIL_PASSWORD, HOSTNAME, PORT, PROFILE
 
 conf = ConnectionConfig(
-    MAIL_USERNAME=str(os.getenv("ROOT_EMAIL_USER")),
-    MAIL_PASSWORD=str(os.getenv("ROOT_EMAIL_PASSWORD")),
-    MAIL_FROM=str(os.getenv("ROOT_EMAIL_USER")),
+    MAIL_USERNAME=str(MAIL_USER),
+    MAIL_PASSWORD=str(MAIL_PASSWORD),
+    MAIL_FROM=str(MAIL_USER),
     MAIL_PORT=587,
     MAIL_SERVER="smtp.gmail.com",
     USE_CREDENTIALS=True,
