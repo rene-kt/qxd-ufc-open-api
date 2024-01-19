@@ -6,7 +6,7 @@ services:
     container_name: selenium-container
     ports:
       - "4444:4444"
-    shm_size: '256m' 
+    shm_size: '900m' 
 
   redis:
     image: redis

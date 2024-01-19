@@ -13,17 +13,11 @@ from config import PROFILE
 
 app = FastAPI()
 
-
+ 
 @app.middleware("http")
 async def middleware(request: Request, call_next):
     now = datetime.now()
     url = request.url.path
-
-    if PROFILE not in ['LOCAL', 'TEST']:
-        key = redis.get_by_id(API_KEY, request.headers.get("api_key"))
-        if key == None or key.is_active == False:
-            raise HTTPException(status_code=401, detail="API KEY inválida")
-
     response = await call_next(request)
     return response
 
@@ -49,13 +43,27 @@ async def get_teacher(id):
 
 
 @app.get("/subject")
-async def get_all_subject():
-    return handle_json_list(redis.get_all(SUBJECT))
-
-
+async def get_all_subject_detailed():
+    subjects = handle_json_list(redis.get_all(SUBJECT))
+    result = []
+    for subject in subjects:
+        obj = {
+            "discipline": json.loads(redis.get_by_id(DISCIPLINE, subject["disciplineId"])),
+            "teacher": json.loads(redis.get_by_id(TEACHER, subject["teacherId"])),
+            "id" : subject["id"]
+        }
+        result.append(obj)
+    return result
+    
 @app.get("/subject/{id}")
 async def get_subject(id):
-    return json.loads(redis.get_by_id(SUBJECT, id))
+    result = json.loads(redis.get_by_id(SUBJECT, id))
+
+    return {
+        "discipline": json.loads(redis.get_by_id(DISCIPLINE, result["disciplineId"])),
+        "teacher": json.loads(redis.get_by_id(TEACHER, result["teacherId"])),
+        "id" : result["id"]
+    }
 
 
 @app.post("/key")
