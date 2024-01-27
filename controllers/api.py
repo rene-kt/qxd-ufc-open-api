@@ -4,10 +4,7 @@ import json
 from model.api_user import ApiUser
 from model.create_api_key import CreateApiKey
 from model.keys import *
-import time
-import uuid
 from datetime import datetime
-from send_email import send_email
 
 from config import PROFILE
 
@@ -64,21 +61,6 @@ async def get_subject(id):
         "teacher": json.loads(redis.get_by_id(TEACHER, result["teacherId"])),
         "id" : result["id"]
     }
-
-
-@app.post("/key")
-async def create_api_key(payload: CreateApiKey):
-    result = ApiUser(str(uuid.uuid4()), payload.name, payload.email, False)
-    redis.insert(result.to_dict(), API_KEY)
-    await send_email.send(payload.email, result.api_key)
-    return {"key": result.api_key}
-
-
-@app.get("/key/{api_key}")
-async def activate_api_key(api_key: str):
-    redis.activate_api_key(api_key)
-    return "Chave ativada com sucesso!"
-
 
 @app.get("/courses/{id}")
 async def get_courses_disciplines(id):
