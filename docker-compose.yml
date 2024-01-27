@@ -1,20 +1,17 @@
 version: "3"
 
-services:
+services:  
   selenium:
-    image: selenium/standalone-chrome:latest
-    container_name: selenium-container
-    ports:
-      - "4444:4444"
-    shm_size: '900m' 
-
+      image: selenium/standalone-chrome:latest
+      container_name: selenium-hub
+      ports:
+        - "4444:4444"
   redis:
     image: redis
-
   python:
     build:
       context: .
-      dockerfile: python.Dockerfile
+      dockerfile: Dockerfile
     container_name: my-python
     ports:
       - "8888:8888"
@@ -25,4 +22,3 @@ services:
       - selenium
     environment: 
       - REDIS_HOST=redis
-      - APP_PROFILE=TEST

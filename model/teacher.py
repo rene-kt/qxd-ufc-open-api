@@ -10,5 +10,5 @@ class Teacher:
         return {
             "id": self.id,
             "name" : self.name,
-            "disciplines": self.disciplines
+            "disciplines": list(self.disciplines)
         }
