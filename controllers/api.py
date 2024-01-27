@@ -44,10 +44,16 @@ async def get_all_subject_detailed():
     subjects = handle_json_list(redis.get_all(SUBJECT))
     result = []
     for subject in subjects:
+        
+        teacher = json.loads(redis.get_by_id(TEACHER, subject["teacherId"]))
         obj = {
+            "id" : subject["id"],
             "discipline": json.loads(redis.get_by_id(DISCIPLINE, subject["disciplineId"])),
-            "teacher": json.loads(redis.get_by_id(TEACHER, subject["teacherId"])),
-            "id" : subject["id"]
+            "teacher": {
+                "id": teacher["id"],
+                "name": teacher["name"]
+            },
+            
         }
         result.append(obj)
     return result

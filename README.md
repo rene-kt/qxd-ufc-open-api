@@ -72,11 +72,11 @@ There are only 3 main endpoints, all of them are **GET**.
 
  ```json
  [
-
     {
+        "id": "QXD0019-JEKEMOVI",
         "discipline": {
-            "id": "QXD0016",
-            "name": "Linguagens de Programação",
+            "id": "QXD0019",
+            "name": "Engenharia de Software",
             "hours": "64",
             "pre_requisite": "QXD0007",
             "courses": [
@@ -84,51 +84,25 @@ There are only 3 main endpoints, all of them are **GET**.
             ]
         },
         "teacher": {
-            "id": "CRPESO",
-            "name": "Criston Pereira de Souza",
-            "disciplines": [
-                "QXD0016",
-                "QXD0008",
-                "QXD0182",
-                "QXD0010",
-                "QXD0001",
-                "QXD0012",
-                "QXD0056",
-                "QXD0041"
-            ]
-        },
-        "id": "QXD0016-CRPESO"
+            "id": "JEKEMOVI",
+            "name": "Jeferson Kenedy Morais Vieira"
+        }
     },
     {
+        "id": "QXD0040-WLARTA",
         "discipline": {
-            "id": "QXD0116",
-            "name": "Álgebra Linear",
+            "id": "QXD0040",
+            "name": "Linguagens Formais e Autômatos",
             "hours": "64",
-            "pre_requisite": null,
+            "pre_requisite": "QXD0008",
             "courses": [
                 "CC"
             ]
         },
         "teacher": {
-            "id": "ANRIBR",
-            "name": "André Ribeiro Braga",
-            "disciplines": [
-                "QXD0214",
-                "QXD0109",
-                "QXD0218",
-                "QXD0144",
-                "QXD0013",
-                "QXD0148",
-                "QXD0145",
-                "QXD0012",
-                "QXD0005",
-                "QXD0116",
-                "QXD0001",
-                "QXD0147",
-                "QXD0006"
-            ]
-        },
-        "id": "QXD0116-ANRIBR"
+            "id": "WLARTA",
+            "name": "Wladimir Araujo Tavares"
+        }
     }
  ]
  ```
