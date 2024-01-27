@@ -1,4 +1,6 @@
-<center><img src ="assets/ufc.svg" width=400px> </center>
+<p align="center">
+<img src ="assets/ufc.svg" width=400px>
+</p>
 
 # About
 
