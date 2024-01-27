@@ -5,11 +5,26 @@ from model.api_user import ApiUser
 from model.create_api_key import CreateApiKey
 from model.keys import *
 from datetime import datetime
+from fastapi.openapi.utils import get_openapi
 
 from config import PROFILE
 
 app = FastAPI()
 
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+    openapi_schema = get_openapi(
+        title="qxd-ufc-open-api",
+        version="1.0.0",
+        description="Open API for University Federal of Ceará Quixadá's Campus (https://www.quixada.ufc.br/)",
+        routes=app.routes,
+    )
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+app.openapi = custom_openapi
+ 
  
 @app.middleware("http")
 async def middleware(request: Request, call_next):
@@ -67,10 +82,6 @@ async def get_subject(id):
         "teacher": json.loads(redis.get_by_id(TEACHER, result["teacherId"])),
         "id" : result["id"]
     }
-
-@app.get("/courses/{id}")
-async def get_courses_disciplines(id):
-    return handle_json_list(redis.get_all(COURSE, id))
 
 def handle_json_list(list):
     result = []

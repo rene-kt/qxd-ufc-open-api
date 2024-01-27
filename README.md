@@ -1,5 +1,5 @@
 <p align="center">
-<img src ="assets/ufc.svg" width=400px>
+    <img src ="assets/ufc.svg" width=400px>
 </p>
 
 # About
@@ -122,6 +122,11 @@ All of these 3 routes has a equivalent one if you wanna get some entity by id Ex
     ]
 }
 ```
+
+OpenAPI docs: acess on {HOSTNAME}:{PORT}/docs (most likely http://localhost:8888/docs)
+<p align="center">
+    <img src ="assets/docs.png">
+</p>
 
 And the same goes for the others: ***/subject*** and ***/teacher***
 
