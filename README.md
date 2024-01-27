@@ -1,4 +1,4 @@
-![University Federal of Ceará image](/assets/ufc.png)
+<center><img src ="assets/ufc.svg" width=400px> </center>
 
 # About
 
@@ -203,6 +203,10 @@ If you somehow wants to contribute with this project, I have planned and map som
 - How to get the actual semester of a discipline? 
 - How to map and save disciplines from another courses? Right now i'm only providing Computer Science course. 
 - How to deploy this API freely?
+- How to be more generic and implement this for all UFC's campus? 
+- Is there a way to do this more fancy? Without webscrapping?
+    - Is there a way to improve the webscrapping?
+
 
 # Contact 
 
